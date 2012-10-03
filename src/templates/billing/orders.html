@@ -1,0 +1,14 @@
+{% extends 'billing/base.html' %}
+
+{% block title %} Orders {% endblock %}
+
+
+{% block content %} 
+{% for order in orders %}
+<a href="{% url billing.views.order order.id %}">Order {{ order.id }} </a>
+<br />
+{% endfor %}
+{% endblock %}
+
+
+<!-- vim: set ft=htmldjango.html:  -->

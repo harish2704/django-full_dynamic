@@ -1,0 +1,110 @@
+# Online catalogue, Russian localization.
+# Copyright (C) 2009 Andy Mikhailenko
+# This file is distributed under the same license as the catalogue package.
+# Andy Mikhailenko <andy@neithere.net>, 2009
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-27 16:31+0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Andy Mikhailenko <andy@neithere.net>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: facets.py:119
+msgid "any"
+msgstr "не важно"
+
+#: forms.py:46
+#, python-format
+msgid "Attribute name must not clash with reserved names (\"%s\")"
+msgstr "Имя атрибута не должно относиться к зарезервированным (\"%s\")"
+
+#: models.py:62
+msgid "text"
+msgstr "текст"
+
+#: models.py:63
+msgid "number"
+msgstr "число"
+
+#: models.py:64
+msgid "date"
+msgstr "дата"
+
+#: models.py:65
+msgid "boolean"
+msgstr "логическое значение"
+
+#: models.py:66
+msgid "multiple choices"
+msgstr "множественный выбор"
+
+#: models.py:67
+msgid "numeric range"
+msgstr "числовой диапазон"
+
+#: models.py:70
+msgid "title"
+msgstr "заголовок"
+
+#: models.py:70
+msgid "user-friendly attribute name"
+msgstr "название атрибута, отображаемое на сайте"
+
+#: models.py:71
+msgid "name"
+msgstr "имя поля"
+
+#: models.py:73
+msgid "help text"
+msgstr "подсказка"
+
+#: models.py:74
+msgid "short description for administrator"
+msgstr "краткое описание для администратора"
+
+#: models.py:75
+msgid "data type"
+msgstr "тип данных"
+
+#: models.py:77 models.py:89
+msgid "required"
+msgstr "обязателен"
+
+#: models.py:78
+msgid "include in search"
+msgstr "с поиском"
+
+#: models.py:79
+msgid "include in filters"
+msgstr "с фильтрацией"
+
+#: models.py:80
+msgid "allow sorting"
+msgstr "с сортировкой"
+
+#: models.py:84
+msgid "schema"
+msgstr "описание свойства"
+
+#: models.py:84
+msgid "schemata"
+msgstr "описания свойств"
+
+#: models.py:322
+msgid "attribute"
+msgstr "свойство"
+
+#: models.py:322
+msgid "attributes"
+msgstr "свойства"
+
+#: widgets.py:38
+#, python-format
+msgid "%(min)s to %(max)s"
+msgstr "от %(min)s до %(max)s"

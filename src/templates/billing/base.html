@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>{% block title %} {% endblock %}</title>
+
+		<!-- Framework CSS -->
+		<link rel="stylesheet" href="{{ STATIC_URL }}/billing/blueprint/screen.css" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="{{ STATIC_URL }}/billing/blueprint/print.css" type="text/css" media="print">
+		<link type="text/css" href="{{ STATIC_URL  }}/billing/css/redmond/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
+		<script type="text/javascript" src="{{ STATIC_URL  }}/billing/js/jquery-1.8.0.min.js"></script>
+		<script type="text/javascript" src="{{  STATIC_URL }}/billing/js/jquery-ui-1.8.23.custom.min.js"></script>
+
+		<style type="text/css">
+			pre,code {
+				white-space:pre;
+			}
+			tbody tr:nth-child(2n) th, tbody tr.even th {
+				background: none repeat scroll 0 0 #E5ECF9;
+			}
+			.items div.single_item:nth-child(2n) {
+				background: none repeat scroll 0 0 #E4FDC9;
+			}
+			.items div.single_item:nth-child(2n+1) {
+				background: none repeat scroll 0 0 #FFFDB7;
+			}
+		</style>
+		<!--[if lt IE 8]><link rel="stylesheet" href="{{ STATIC_URL }}/billing/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+		
+		{% block stylesheet %} {% endblock %}
+
+		{% block javascipt %} {% endblock %}
+
+	</head>
+	<body>
+		{% block body %} {% endblock %}
+		<div class="container">
+			{% block content %} {% endblock %}
+
+		</div>
+	</body>
+</html>

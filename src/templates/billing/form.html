@@ -1,0 +1,152 @@
+{% extends 'billing/base.html' %}
+
+{% block title %} Billing Application {% endblock %}
+
+{% block stylesheet %}
+<style type="text/css" media="screen">
+	.items .ui-selecting { background: #FECA40; }
+	.items .ui-selected { background: #40CACA; }
+	.errorlist {background:#fbe3e4;color:#8a1f11;border-color:#fbc2c4;}
+	.helptext {color: #777777;display: table;}
+	.item_form > li > label {
+		background-color: #C3D9FF;
+		border-bottom: 2px solid #FFDBCE;
+		display: block;
+	}
+	.item_form > li {
+		border-color: #FFDBCE;
+		border-style: solid;
+		border-width: 3px 3px 3px 0;
+		display: table-cell;
+		margin-right: 15px;
+	}
+	.item_form > li:first-child {
+		border-left: 3px solid #FFDBCE;
+	}
+	.item_form ul {
+		list-style-type: none;
+	}
+</style>
+{% endblock %}
+
+
+{% block javascipt %}
+<script type="text/javascript" charset="utf-8">
+	function getCookie(name) {
+		var cookieValue = null;
+		if (document.cookie && document.cookie != '') {
+			var cookies = document.cookie.split(';');
+			for (var i = 0; i < cookies.length; i++) {
+				var cookie = jQuery.trim(cookies[i]);
+				// Does this cookie string begin with the name we want?
+				if (cookie.substring(0, name.length + 1) == (name + '=')) {
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+updateElementIndex = function updateElementIndex (elem, prefix, ndx) {
+	var idRegex = new RegExp('(id_' + prefix + '-\\d+-)|(^)'), replacement = 'id_' + prefix + '-' + ndx + '-';
+	if (elem.attr("for")) elem.attr("for", elem.attr("for").replace(idRegex, replacement));
+	if (elem.attr('id')) elem.attr('id', elem.attr('id').replace(idRegex, replacement));
+	var idRegex = new RegExp('(' + prefix + '-\\d+-)|(^)'), replacement = prefix + '-' + ndx + '-';
+	if (elem.attr('name')) elem.attr('name', elem.attr('name').replace(idRegex, replacement));
+}
+function reorder (index, Element){
+	$(Element).find('input[name]').filter(function(){ return $(this).attr('name').match ('-\\d-ORDER'); }).each(
+			function(ind,elem){
+			$(elem).val(index);
+			});
+}
+updateSorting = function(event, ui){
+	$(this).children('.single_item').each(reorder);
+}
+choose_onChange = function(){
+			itemtype = $(this).val();
+			elem = this;
+			item_container = $(this.parentElement)
+			main_container = $('.items')
+			num = main_container.children().index(item_container)
+			$.post('{% url billing.views.ajax %}',{'itemtype':itemtype,'num':num},function(data, textStatus,jqXHR){
+			// $(elem).siblings('.item_form').hide();
+			$(elem).siblings('.item_form').html(data);
+			// $(elem).siblings('.item_form').show('blind');
+			});
+			}
+
+$(function() {
+		$('#add_item').click(function(){
+			main_container = $('.items');
+			proto = main_container.children(':last').clone();
+			proto.children('.item_form').html('');
+			total_forms = Number( $('input[name=i-TOTAL_FORMS]').val());
+			total_forms = total_forms +1 ;
+			$('input[name=i-TOTAL_FORMS]').val(total_forms);
+			$('input[name=oi-TOTAL_FORMS]').val(total_forms);
+			proto.find('input,select,textarea,label').each(function() {
+				updateElementIndex($(this), 'oi', total_forms-1 );
+				});
+			
+			proto.find('select.choose').live( 'change', choose_onChange);
+			main_container.append(proto[0].outerHTML);
+			})
+		$("select.choose").change(choose_onChange); 
+		$('.items').sortable({update : updateSorting});
+		$('.items').selectable();
+		$(document).ajaxSend(function(event, xhr, settings) {
+			if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+			xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+			}
+			});
+		})
+</script>
+{% endblock %}
+
+{% block content %}
+{% if msg %}
+<div class="success">Form Successfully Saved</div>
+{% endif %}
+<form action="" method="post" >  {% csrf_token %}
+   {{ ordereditemformset.management_form }}
+	<table border="0">
+		<caption>Order Form</caption>
+		<thead>
+			<tr>
+				<th>Properties</th>
+				<th>Values</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{ customer_form.as_table }}
+			{{ order_form.as_table }}
+			<tr>
+				<td colspan='2'> 
+					{% for mform in izip_managementforms  %}
+					{{ mform.as_ul }}
+					{% endfor %}
+					<div class="items">
+						{% for ordereditem ,item in izip_forms %}
+						<div class="single_item">
+							<select class='choose' value=' {{ item.instance.entity_id }}' >
+								{% for entity in entities  %}
+								<option value="{{ entity.id }}"> {{ entity }} </option>
+								{% endfor %}
+							</select>
+							<div class="item_form"> {{ item.as_ul }} </div>
+							<div class='oi_from'> {{ ordereditem.as_ul }} </div>
+						</div>
+						{% endfor %}
+					</div>
+					<a accessKey='a' id="add_item">Add Item</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<p><input type="submit" value="Continue &rarr;"></p>
+</form>
+{% endblock %}
+
+
+<!-- vim: set ft=htmldjango.html:  -->

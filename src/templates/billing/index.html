@@ -1,0 +1,23 @@
+{% extends 'billing/base.html' %}
+
+{% block title %} Billing Application {% endblock %}
+
+
+
+
+{% block content %} 
+	<hr />
+	<h1> Welcom To Billing Application </h1> 
+	<hr />
+	<fieldset>
+		<legend>data</legend>
+		<code> {{ data }} </code>
+	</fieldset>
+	<fieldset>
+		<legend>request</legend>
+		<code>{{ request }}</code>
+	</fieldset>
+{% endblock %}
+
+
+<!-- vim: set ft=htmldjango.html:  -->
